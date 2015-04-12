@@ -16,7 +16,7 @@ function PrintEffect(container, opts) {
 		// images: ["../images/01.jpg", "../images/02.jpg", "../images/03.jpg", "../images/04.jpg"],
 
 		animSpan: 250,
-		soundUrls: ["sounds/p3.ogg", "sounds/p3.mp3"],
+		soundUrls: ["sounds/p3.mp3", "sounds/p3.ogg"],
 		/*src: "img/sprite.jpg",
 		sprite: [
 			[-0, -0, 50, 50],
@@ -94,63 +94,44 @@ PrintEffect.prototype.play = function(cb) {
 	var sprite = opts.sprite;
 	var elements = pe.elements;
 	var sound = this.sound;
-	// this.done(_play);
-	// we assume by the time this function is called,
-	// all prerequisite has been met
-	// 
+	
+	var counter = 0;
 
 	animate();
-
-	function _play(params) {
-
-		if (ios) {
-			$(document).on('touchstart', function() {
-				animate();
-			})
-		} else {
-			animate();
-		}
-	}
-	var time1 
+	
 	function animate() {
-		animate.counter = animate.counter || 0;		
-		var lastId;
+		
 		var delay;
-		if (animate.counter === 0) { 
-			delay = 0;
-			time1 = Date.now();
+		if (counter === 0) {
+			delay = 1;			
 			sound.play();
 		} else {
-			delay = sprite[animate.counter] && sprite[animate.counter][4] || opts.animSpan;
-		}
-		if(animate.counter === elements.length - 1) {
-			var time2 = Date.now();
-			console.log(time2 - time1);
-		}
-		console.log(delay);
+			delay = sprite[counter] && sprite[counter][4] || opts.animSpan;
+		}		
+		
 		setTimeout(function() {
 
 			// we need iteration go one more time to clip extra sound.
 			// as well as trigger the end hook
-			if (animate.counter == elements.length) {
+			if (counter == elements.length) {
 				// sound.pause(lastId);
 				cb();
 				return;
 			}
 
-			elements[animate.counter].show()
+			elements[counter][0].style.display = 'block';
 
 			// callback: Function (optional) 
 			// Fires when playback begins and returns the soundId, which is the unique identifier for this specific playback instance.
 			// see #https://github.com/goldfire/howler.js#user-content-methods
 			// we give it a callback to get id of the last sound instance
 
-			/*var callback = animate.counter === elements.length - 1 ? _callback : $.noop;
+			/*var callback = counter === elements.length - 1 ? _callback : $.noop;
 
 			function _callback(id) {				
 				lastId = id;
 			}*/
-			animate.counter++;
+			counter++;
 			animate();
 		}, delay);
 

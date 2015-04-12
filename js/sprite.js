@@ -28,9 +28,10 @@ $.fn.sprite = function(opts) {
 	        width: Math.floor(item[2] * ratio),
 	        height: Math.floor(item[3] * ratio),
 	        backgroundImage: "url(" + src + ")",
-	        backgroundRepeat: "no-repeat"
+	        backgroundRepeat: "no-repeat",
+	        display: 'none'
 	    })
-	    $div.hide();        
+	    
 	    var delay = item[5] || 0;        
 	    setTimeout(function () {                
 	        $div.show().addClass(item[4] || "");

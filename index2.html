@@ -4,6 +4,24 @@
 	<title>Document</title>
 </head>
 <body>
-	<audio src="sounds/march.mp3" autoplay>blah</audio>
+	<!-- <audio src="sounds/march.mp3" autoplay>blah</audio> -->
 </body>
+
+<script src="lib/howler.js"></script>
+<!-- <script src="lib/zepto.js"></script> -->
+
+<script>
+setTimeout(function () {
+	var sound = new Howl({
+	  urls: ['sounds/p3.mp3'],
+	  onload: function(a) {
+	  	console.log(arguments);
+		sound.play();	  	
+	  }
+	});
+
+	
+	
+}, 500)
+</script>
 </html>

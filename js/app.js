@@ -155,6 +155,7 @@ HammerCarousel.prototype = {
             this.currentIndex += (percent < 0) ? 1 : -1;
             if (this.currentIndex < 0) this.currentIndex = 0;
             if (animate && this.currentIndex === 1) {
+                
                 setTimeout(function() {
                     $('.upper').sprite({
                         sprite: sprite,
@@ -189,7 +190,7 @@ HammerCarousel.prototype = {
 
     var outer = new HammerCarousel(document.querySelector(".container"), Hammer.DIRECTION_VERTICAL);
     var pe = new PrintEffect(".words");
-    test = pe;
+    
 
     var d2 = $.Deferred();
     page2Promise = d2.promise();
@@ -207,7 +208,8 @@ HammerCarousel.prototype = {
     var d3 = $.Deferred();
     bgMusicPromise = d3.promise();
     var bgMusic = new Howl({
-        urls: ["sounds/march.ogg", "sounds/march.mp3"],
+        urls: ["sounds/march.mp3", "sounds/march.ogg"],
+        loop:true,
         onload: function() {
             d3.resolve();
         }
@@ -215,7 +217,6 @@ HammerCarousel.prototype = {
 
     $.when(pe, imgLoadPromise, page2Promise, bgMusicPromise).done(function() {
         $('.mask-layer').hide();
-        
         if (ios) {
             $(".play-mask").show()
             $(document).one('touchstart', function() {
@@ -223,7 +224,11 @@ HammerCarousel.prototype = {
                 play();
             });
         } else {
-            play();
+            setTimeout(function () {
+                // body...
+                play();
+
+            }, 500)
         }
 
         function play() {
